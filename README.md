@@ -6,8 +6,8 @@ Repositorio del curso MDS7202, Facultad de Ciencias Físicas y Matemáticas, Uni
 
 | Nombre | GitHub |
 |--------|--------|
-| Nombre Apellido 1 | [@usuario1](https://github.com/usuario1) |
-| Nombre Apellido 2 | [@usuario2](https://github.com/usuario2) |
+| Vicente Carrasco | [@vicente011](https://github.com/vicente011) |
+| Vicente Anguita | [@vicente-ang](https://github.com/vicente-ang) |
 
 ## Estructura del repositorio
 
