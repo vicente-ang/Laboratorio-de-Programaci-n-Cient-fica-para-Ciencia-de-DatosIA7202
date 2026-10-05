@@ -27,7 +27,9 @@ def vecinos_mas_cercanos(
     n_vecinos = min(k + 1, len(nombres))
 
     modelo = NearestNeighbors(n_neighbors=n_vecinos, metric=metrica).fit(X)
-    distancias, indices = modelo.kneighbors(X[indice_consulta : indice_consulta + 1])
+    distancias, indices = modelo.kneighbors(
+        X[indice_consulta : indice_consulta + 1]
+    )
 
     indices = indices[0]
     distancias = distancias[0]

@@ -86,7 +86,8 @@ def lista_poderes(columna: str = "superpowers") -> pl.Expr:
     """
     return (
         pl.col(columna)
-        .str.extract_all(r"'[^']+'").list.eval(pl.element().str.strip_chars("'"))
+        .str.extract_all(r"'[^']+'")
+        .list.eval(pl.element().str.strip_chars("'"))
         .list.unique(maintain_order=True)
         .alias("poderes")
     )
@@ -129,7 +130,9 @@ def construir_features(personajes: pl.DataFrame) -> pl.DataFrame:
     if personajes["name"].null_count() > 0:
         raise ValueError("La columna name no puede contener valores nulos.")
     if personajes["name"].n_unique() != personajes.height:
-        raise ValueError("La columna name debe identificar filas sin duplicados.")
+        raise ValueError(
+            "La columna name debe identificar filas sin duplicados."
+        )
 
     # Primero construimos las columnas derivadas que no alteran el grano.
     features = personajes.with_columns(

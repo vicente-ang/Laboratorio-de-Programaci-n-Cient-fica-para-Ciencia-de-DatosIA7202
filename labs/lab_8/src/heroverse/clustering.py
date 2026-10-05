@@ -18,8 +18,17 @@ def elegir_k(X: np.ndarray, ks: list[int], semilla: int = 0) -> pl.DataFrame:
         modelo = KMeans(n_clusters=k, n_init=10, random_state=semilla)
         etiquetas = modelo.fit_predict(X)
         valor = silhouette_score(X, etiquetas)
-        filas.append({"k": k, "inercia": float(modelo.inertia_), "silhouette": float(valor)})
-    return pl.DataFrame(filas, schema={"k": pl.Int64, "inercia": pl.Float64, "silhouette": pl.Float64})
+        filas.append(
+            {
+                "k": k,
+                "inercia": float(modelo.inertia_),
+                "silhouette": float(valor),
+            }
+        )
+    return pl.DataFrame(
+        filas,
+        schema={"k": pl.Int64, "inercia": pl.Float64, "silhouette": pl.Float64},
+    )
 
 
 def estabilidad(X: np.ndarray, k: int, semillas: list[int]) -> float:
@@ -30,9 +39,11 @@ def estabilidad(X: np.ndarray, k: int, semillas: list[int]) -> float:
         KMeans(n_clusters=k, n_init=1, random_state=s).fit_predict(X)
         for s in semillas
     ]
-    return float(np.mean([
-        adjusted_rand_score(a, b) for a, b in combinations(etiquetas, 2)
-    ]))
+    return float(
+        np.mean(
+            [adjusted_rand_score(a, b) for a, b in combinations(etiquetas, 2)]
+        )
+    )
 
 
 def perfil_clusters(
@@ -67,15 +78,26 @@ def equivalentes(
     origen = nombres.index(consulta)
     creadores = personajes["creator"].to_list()
     candidatos = [
-        i for i, creador in enumerate(creadores)
+        i
+        for i, creador in enumerate(creadores)
         if i != origen and creador != excluir_creator
     ]
     if not candidatos or k <= 0:
-        return pl.DataFrame(schema={"name": pl.String, "creator": pl.String, "distancia": pl.Float64})
-    distancias = pairwise_distances(X[candidatos], X[origen : origen + 1], metric=metrica).ravel()
+        return pl.DataFrame(
+            schema={
+                "name": pl.String,
+                "creator": pl.String,
+                "distancia": pl.Float64,
+            }
+        )
+    distancias = pairwise_distances(
+        X[candidatos], X[origen : origen + 1], metric=metrica
+    ).ravel()
     elegidos = np.argsort(distancias, kind="stable")[:k]
-    return pl.DataFrame({
-        "name": [nombres[candidatos[j]] for j in elegidos],
-        "creator": [creadores[candidatos[j]] for j in elegidos],
-        "distancia": distancias[elegidos].astype(float).tolist(),
-    })
+    return pl.DataFrame(
+        {
+            "name": [nombres[candidatos[j]] for j in elegidos],
+            "creator": [creadores[candidatos[j]] for j in elegidos],
+            "distancia": distancias[elegidos].astype(float).tolist(),
+        }
+    )
