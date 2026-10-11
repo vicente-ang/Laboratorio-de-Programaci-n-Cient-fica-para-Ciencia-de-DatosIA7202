@@ -1,0 +1,28 @@
+table: silver.payments
+purpose: >-
+  Publicar los pagos registrados por orden con montos finitos y no negativos,
+  única evidencia admisible para la dimensión Monetary de RFM.
+grain: Una fila por order_id y payment_sequential.
+primary_key: [order_id, payment_sequential]
+owner: Equipo de Datos de Pudubella
+lineage: [bronze.payments]
+classification: interno
+required_columns:
+  - order_id
+  - payment_sequential
+  - payment_value
+column_types:
+  order_id: string
+  payment_sequential: integer
+  payment_value: float
+allow_empty: false
+constraints:
+  order_id:
+    nullable: false
+  payment_sequential:
+    nullable: false
+    minimum: 1
+  payment_value:
+    nullable: false
+    minimum: 0.0
+    finite: true
