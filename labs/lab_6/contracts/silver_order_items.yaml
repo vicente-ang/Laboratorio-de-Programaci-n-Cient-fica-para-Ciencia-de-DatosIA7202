@@ -1,0 +1,34 @@
+table: silver.order_items
+purpose: >-
+  Publicar el detalle de ítems vendidos con precios y fletes admisibles, base
+  del valor de ventas diarias.
+grain: Una fila por order_id y order_item_id.
+primary_key: [order_id, order_item_id]
+owner: Equipo de Datos de Pudubella
+lineage: [bronze.order_items]
+classification: interno
+required_columns:
+  - order_id
+  - order_item_id
+  - price
+  - freight_value
+column_types:
+  order_id: string
+  order_item_id: integer
+  price: float
+  freight_value: float
+allow_empty: false
+constraints:
+  order_id:
+    nullable: false
+  order_item_id:
+    nullable: false
+    minimum: 1
+  price:
+    nullable: false
+    minimum: 0.0
+    finite: true
+  freight_value:
+    nullable: false
+    minimum: 0.0
+    finite: true

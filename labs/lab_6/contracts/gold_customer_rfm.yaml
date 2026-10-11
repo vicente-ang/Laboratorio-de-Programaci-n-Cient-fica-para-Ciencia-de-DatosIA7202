@@ -1,0 +1,53 @@
+table: gold.customer_rfm
+purpose: >-
+  Publicar la tabla de variables RFM por persona, calculada solo con órdenes
+  entregadas con pago registrado y hasta reference_date, para alimentar un
+  modelo posterior de propensión a recompra sin fuga de información.
+grain: Una fila por customer_unique_id.
+primary_key: [customer_unique_id]
+owner: Equipo de Datos de Pudubella
+lineage: [silver.orders, silver.customers, silver.payments]
+classification: interno
+required_columns:
+  - customer_unique_id
+  - last_purchase
+  - recency_days
+  - frequency
+  - monetary
+  - reference_date
+  - segment
+column_types:
+  customer_unique_id: string
+  last_purchase: datetime
+  recency_days: integer
+  frequency: integer
+  monetary: float
+  reference_date: date
+  segment: string
+allow_empty: false
+constraints:
+  customer_unique_id:
+    nullable: false
+    unique: true
+  last_purchase:
+    nullable: false
+  recency_days:
+    nullable: false
+    minimum: 0
+  frequency:
+    nullable: false
+    minimum: 1
+  monetary:
+    nullable: false
+    minimum: 0.0
+    finite: true
+  reference_date:
+    nullable: false
+  segment:
+    nullable: false
+    allowed_values:
+      - Champions
+      - Loyal
+      - New
+      - Lost
+      - Others
