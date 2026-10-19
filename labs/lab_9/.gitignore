@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+mlflow.db
+mlruns/
+data/processed/*
+!data/processed/.gitignore
+reports/figures/*
+!reports/figures/.gitignore
+# Los datos se descargan del enlace del equipo docente (ver data/raw/README.md):
+# no se versionan por tamaño (~103 MB) y por su licencia CC BY-SA 4.0.
+data/raw/mediciones.csv
+data/raw/imagenes/
