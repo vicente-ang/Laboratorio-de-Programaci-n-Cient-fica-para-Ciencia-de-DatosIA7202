@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+mlflow.db
+mlruns/
+data/processed/*
+!data/processed/.gitignore
+reports/figures/*
+!reports/figures/.gitignore
+
+# Letras del catálogo: uso local del curso.
+data/raw/letras.csv
+
