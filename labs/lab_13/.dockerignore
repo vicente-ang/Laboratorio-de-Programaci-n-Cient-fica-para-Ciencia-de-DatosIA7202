@@ -1,2 +1,19 @@
-# Completen este archivo siguiendo la sección 3.1 del notebook: una entrada por
-# línea con lo que Docker no debe enviar al construir la imagen.
+# Lo que Docker no envía al construir la imagen: secretos, entornos locales,
+# material de trabajo y cachés. `models` ya no se excluye (etapa 4): el modelo
+# viaja dentro de la imagen.
+.env
+.venv
+.git
+.gitignore
+.vscode
+data
+notebooks
+tests
+scripts
+__pycache__
+**/__pycache__
+.pytest_cache
+.ruff_cache
+.ipynb_checkpoints
+**/.ipynb_checkpoints
+*.pyc
